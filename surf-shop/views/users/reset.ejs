@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>Reset Password</h1>
+
+<form action="/reset/<%= token  %>?_method=PUT" method="post">
+
+	<div>
+		<label for="password">New Password:</label>
+		<input type="password" name="password" id="password" autofocus required>
+	</div>
+	<div>
+		<label for="confirm">Confirm Password:</label>
+		<input type="password" name="confirm" id="confirm"  required>
+	</div>
+	<div>
+		<input type="submit" value="Update Password">
+	</div>
+</form>

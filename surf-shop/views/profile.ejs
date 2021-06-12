@@ -1,0 +1,97 @@
+<% layout("layouts/boilerplate") -%>
+
+<h1>
+<%= currentUser.username %>'s Profile </h1>
+<h2>Recent posts</h2>
+<% posts.forEach(function(post){ %>
+	<a href="/posts/<%= post.id %>"><li><%= post.title %></a></li>
+<% }) %>
+
+<hr>
+
+<form action="/profile?_method=PUT" method="post" id="update-form" >
+
+	<div>
+		<label for="username">Username:
+		</label>
+		<input type="text" id="username" placeholder="Username" value="<%= currentUser.username %>" name="username" autofocus required>
+	</div>
+
+	<div>
+		<label for="current-password">Current Password:
+		</label>
+		<input type="password" id="current-password" name="currentPassword" placeholder="Current Password" required>
+	</div>
+
+	<div>
+		<label for="new-password">New Password:
+		</label>
+		<input type="password" id="new-password" placeholder="New password" name="newPassword" >
+	</div>
+
+	<div>
+		<label for="password-confirmation">Password Confirmation:
+		</label>
+		<input type="password" id="password-confirmation" placeholder="Password Confirmation" name="passwordConfirmation">
+	</div>
+
+	<div id="validation-message"></div>
+
+	<div>
+		<label for="email">Email:
+		</label>
+		<input type="text" id="email" name="email" value="<%= currentUser.email %>" placeholder="Email">
+	</div>
+
+	<div>
+		<label for="image">Image:
+		</label>
+		<input type="file" id="image" name="image">
+	</div>
+	<input type="submit">
+</form>
+
+<script>
+	let newPasswordValue;
+	let confirmationValue;
+
+	const form=document.querySelector('form');
+	const newPassword=document.getElementById('new-password');
+	const confirmation=document.getElementById('password-confirmation');
+	const validationMessage=document.getElementById('validation-message');
+	function validatePasswords(msg, add ,remove)
+	{
+		validationMessage.textContent=msg;
+		validationMessage.classList.add(add);
+		validationMessage.classList.remove(remove);
+	}
+	confirmation.addEventListener('input', e=>{
+		e.preventDefault();
+		newPasswordValue=newPassword.value;
+		confirmationValue=confirmation.value;
+		if(newPasswordValue!==confirmationValue){
+			validatePasswords('Passwords do not match','color-red','color-green');
+		}
+		else
+		{
+			validatePasswords('Passwords match','color-green','color-red');
+		}
+	});
+
+	form.addEventListener('submit', e=>{
+		if(newPasswordValue!==confirmationValue){
+			e.preventDefault();
+			const error=document.getElementById('error');
+			if(!error)
+			{
+			const flashErrorH1=document.createElement('h1');
+			flashErrorH1.classList.add('color-red');
+			flashErrorH1.setAttribute('id', 'error');
+			flashErrorH1.textContent="Passwords must match.";
+			const navbar=document.getElementById('navbar');
+			navbar.parentNode.insertBefore(flashErrorH1, navbar.nextSibling);
+			}
+		}
+	});
+
+</script>

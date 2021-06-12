@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>Post Index</h1>
+
+
+<% posts.docs.forEach(function(post){ %>
+ 	<div>
+		<h2><%= post.title %></h2>
+		<div><%= post.price %></div>
+		<div><%= post.description %></div>
+		<div><%= post.location %></div>
+		<div><a href="/posts/<%= post.id %>">View More</a></div>
+	</div>
+
+
+<% }) %>
+
+<% include ../partials/postPaginate %>

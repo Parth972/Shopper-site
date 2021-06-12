@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<link rel="stylesheet" href="/stylesheets/post-show.css">
+	<link rel="stylesheet" href="/stylesheets/starability-basic-min.css">
+
+</head>
+<body>
+	<% include ../partials/navbar %>
+   	<% include ../partials/flash-messages %>   	
+	<%- body -%>
+	<script>
+
+//IMP: CONVERTING post which is a object to string, because <script> tag means we are working client side, and the post object is a server side, so to use it //as a client side in <script> we need to convert it from object to string.
+
+var post = <%- JSON.stringify(post) %>;
+</script>
+
+<script src="/javascripts/post-show.js"></script>
+</body>
+</html>
